@@ -32,7 +32,7 @@ Train['Age'] = Train['Age'].fillna(MeanAge)
 
 # Specifying Model Parameters
 
-SurvivalFeatures = ['Pclass','Sex','Age','Parch','Fare','Embarked']
+SurvivalFeatures = ['Pclass','Sex','Age','Parch','Fare']
 MeanAge = Train['Age'].mean()
 NullAge = pd.isna(Train['Age'])
 x = Train[SurvivalFeatures]
