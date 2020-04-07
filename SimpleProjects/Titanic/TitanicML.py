@@ -2,7 +2,7 @@
 
 Titanic:
     
-    Predict the survival of passengers on the Titanic using basic Machine Learning concepts/
+    Predict the survival of passengers on the Titanic using basic Machine Learning concepts.
 
 """
 
