@@ -104,4 +104,4 @@ SubCsv = pd.DataFrame({'Survived' : SurvPredsTest})
 SubCsv = SubCsv.set_index(Ans.PassengerId,'PassengerId')
 print(SubCsv)
 
-SubCsv.to_csv('submission.csv')
+SubCsv.to_csv('1.1submission.csv')

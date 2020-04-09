@@ -1,8 +1,8 @@
 """
 
-Titanic 1.2: Score = 0.73684
+Titanic 1.3:
     
-    Use Simple Imputer to deal with Null values, and One-hot encoding to handle Embarkation
+    Improve the encoding of the embarkation port
     Potential to include Name, Ticket, and Cabin
 
 """
@@ -14,7 +14,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.metrics import mean_absolute_error
-
 
 # Read Data
 
@@ -47,8 +46,11 @@ CatCols = set(xTrain.columns) - set(xTrain._get_numeric_data().columns)
 
 xTrain['Sex'].replace({'male' : 0, 'female' : 1}, inplace = True)
 
-enc = OneHotEncoder(sparse = False)
-xTrain['Embarked'] = enc.fit_transform(xTrain[['Embarked']])
+enc = OneHotEncoder(handle_unknown='ignore')
+enc_df = pd.DataFrame(enc.fit_transform(xTrain[['Embarked']]).toarray())
+
+xTrain = xTrain.join(enc_df)
+xTrain = xTrain.drop(columns = 'Embarked')
 
 # Create and fit model
 
@@ -74,8 +76,11 @@ CatColsT = set(xTest.columns) - set(xTest._get_numeric_data().columns)
 
 xTest['Sex'].replace({'male' : 0, 'female' : 1}, inplace = True)
 
-enc = OneHotEncoder(sparse = False)
-xTest['Embarked'] = enc.fit_transform(xTest[['Embarked']])
+enc = OneHotEncoder(handle_unknown='ignore')
+enc_df = pd.DataFrame(enc.fit_transform(xTest[['Embarked']]).toarray())
+
+xTest = xTest.join(enc_df)
+xTest = xTest.drop(columns = 'Embarked')
 
 # Predict Survival for test data
 
@@ -87,4 +92,4 @@ SubCsv = pd.DataFrame({'Survived' : yTest})
 SubCsv = SubCsv.set_index(dfTest['PassengerId'],'PassengerId')
 print(SubCsv)
 
-SubCsv.to_csv('1.2submission.csv')
+SubCsv.to_csv('1.3submission.csv')
