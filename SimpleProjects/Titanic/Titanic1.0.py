@@ -1,6 +1,6 @@
 """
 
-Titanic:
+Titanic 1.0:
     
     Predict the survival of passengers on the Titanic using basic Machine Learning concepts.
 
