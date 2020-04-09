@@ -12,17 +12,24 @@ Titanic 1.4: Score = 0.7416
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.metrics import mean_absolute_error
 
 # Read Data
 
 dfTrain = pd.read_csv('train.csv')
 dfTest = pd.read_csv('test.csv')
 
+# Feature Engineering
+
+FamSizeTrain = dfTrain['SibSp'] + dfTrain['Parch']
+dfTrain['FamSize'] = FamSizeTrain
+
+FamSizeTest = dfTest['SibSp'] + dfTest['Parch']
+dfTest['FamSize'] = FamSizeTest
+
+
 # Specify model parameters
 
-xFeatures = ['Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']
+xFeatures = ['Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked','FamSize']
 
 xTrain = dfTrain[xFeatures]
 xTest = dfTest[xFeatures]
@@ -114,3 +121,4 @@ SubCsv = pd.DataFrame({'Survived' : yTest})
 SubCsv = SubCsv.set_index(dfTest['PassengerId'],'PassengerId')
 
 SubCsv.to_csv('1.4submission.csv')
+
